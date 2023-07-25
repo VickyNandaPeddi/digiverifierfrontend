@@ -94,7 +94,7 @@ export class AdminSetupComponent implements OnInit {
           title: result.message,
           icon: 'success'
         })
-        const sconfigURL = 'admin/custconfig/'+result.data['organizationId'];
+        const sconfigURL = 'admin/admindashboard/';
         this.router.navigate([sconfigURL]);
       }else{
         Swal.fire({

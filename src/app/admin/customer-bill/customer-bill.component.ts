@@ -33,10 +33,21 @@ export class CustomerBillComponent implements OnInit {
       this.getBillValues=data.data;
       if(this.getBillValues){
         this.getBillValues.forEach((element:any) => {
-          $(".billrpp"+element.source.sourceId).val(element.ratePerReport);
-          $(".billrpi"+element.source.sourceId).val(element.ratePerItem);
-          $(".billServiceId"+element.source.sourceId).val(element.serviceId);
-          
+          // $(".billrpp"+element.source.sourceId).val(element.ratePerReport);
+          // $(".billrpi"+element.source.sourceId).val(element.ratePerItem);
+          // $(".billServiceId"+element.source.sourceId).val(element.serviceId);
+            const billrpp = document.querySelector(".billrpp" + element.source?.sourceId) as HTMLInputElement;
+            const billrpi = document.querySelector(".billrpi" + element.source?.sourceId) as HTMLInputElement;
+            const billServiceId = document.querySelector(".billServiceId" + element.source?.sourceId) as HTMLInputElement;      
+            if (billrpp) {
+              billrpp.value = element.ratePerReport;
+            }
+            if (billrpi) {
+              billrpi.value = element.ratePerItem;
+            }
+            if (billServiceId) {
+              billServiceId.value = element.serviceId;
+            }
         });
       }
 
@@ -56,16 +67,28 @@ export class CustomerBillComponent implements OnInit {
   ngOnInit(): void {
      
   }
-  billsubmit(){
-    var billValue = $(".x-billcomponents");
-    var i=0;
-    $.each(billValue,function(idx,elem){
-      if($(elem).val()!=""){
+  // billsubmit(){
+  //   var billValue = $(".x-billcomponents");
+  //   var i=0;
+  //   $.each(billValue,function(idx,elem){
+  //     if($(elem).val()!=""){
+  //       i++;
+  //     }
+  //   })
+  //   if(i>0){
+  //     this.onSubmit()
+  //   }
+  // }
+  billsubmit() {
+    let billValue = document.querySelectorAll(".x-billcomponents");
+    let i = 0;
+    billValue.forEach(function (elem) {
+      if (elem instanceof HTMLInputElement && elem.value !== "") {
         i++;
       }
-    })
-    if(i>0){
-      this.onSubmit()
+    });
+    if (i > 0) {
+      this.onSubmit();
     }
   }
   onSubmit() {
@@ -91,11 +114,23 @@ export class CustomerBillComponent implements OnInit {
   }
     billUpdate() {
       this.getBillValues.forEach((element:any) => {
-        element.ratePerReport = $(".billrpp"+element.source.sourceId).val();
-        element.ratePerItem = $(".billrpi"+element.source.sourceId).val();
-        element.serviceId = $(".billServiceId"+element.source.sourceId).val();
-
+        // element.ratePerReport = $(".billrpp"+element.source.sourceId).val();
+        // element.ratePerItem = $(".billrpi"+element.source.sourceId).val();
+        // element.serviceId = $(".billServiceId"+element.source.sourceId).val();
+        const ratePerReport = document.querySelector(".billrpp" + element.source.sourceId) as HTMLInputElement;
+        const ratePerItem = document.querySelector(".billrpi" + element.source.sourceId) as HTMLInputElement;
+        const serviceId = document.querySelector(".billServiceId" + element.source.sourceId) as HTMLInputElement;
+      
+        if (ratePerReport && ratePerItem && serviceId) {
+          element.ratePerReport = ratePerReport.value;
+          console.log(element.ratePerReport);
+          element.ratePerItem = ratePerItem.value;
+          console.log(element.ratePerItem);
+          element.serviceId = serviceId.value;
+          console.log(element.serviceId);
+        }
       });
+
       return this.customers.saveCustomersBill(this.getBillValues,this.orgID ).subscribe((result:any)=>{
         console.log(result);
         if(result.outcome === true){
