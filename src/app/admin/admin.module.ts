@@ -19,7 +19,6 @@ import { OrgadminUsermgmtComponent } from './orgadmin-usermgmt/orgadmin-usermgmt
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from '../charts/charts.module';
 import { MyprofileComponent } from './myprofile/myprofile.component';
-import { CustomerUtilizationComponent } from './customer-utilization/customer-utilization.component';
 import { CustomerUtilAgentComponent } from './customer-util-agent/customer-util-agent.component';
 import { CustomerUtilCandidatesComponent } from './customer-util-candidates/customer-util-candidates.component';
 import { EkycreportComponent } from './ekycreport/ekycreport.component';
@@ -48,7 +47,6 @@ import { ConventionalCReportApprovalComponent } from './conventional-c-report-ap
     CustomerEditComponent,
     OrgadminUsermgmtComponent,
     MyprofileComponent,
-    CustomerUtilizationComponent,
     CustomerUtilAgentComponent,
     CustomerUtilCandidatesComponent,
     EkycreportComponent,

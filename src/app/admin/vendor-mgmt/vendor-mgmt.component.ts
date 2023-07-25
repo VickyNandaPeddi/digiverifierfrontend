@@ -72,24 +72,23 @@ export class VendorMgmtComponent implements OnInit {
         console.log(this.getBillValues,"--------------------")
         if(this.getBillValues){
           this.getBillValues.forEach((element:any) => {
-            $(".billrpp"+element.source.sourceId).val(element.ratePerItem);
-            $(".billrpi"+element.source.sourceId).val(element.tatPerItem);
-            $(".billServiceId"+element.source.sourceId).val(element.userId);
-            
+            const billrpp = document.querySelector(".billrpp" + element.source?.sourceId) as HTMLInputElement;
+            const billrpi = document.querySelector(".billrpi" + element.source?.sourceId) as HTMLInputElement;
+            const billServiceId = document.querySelector(".billServiceId" + element.source?.sourceId) as HTMLInputElement;      
+            if (billrpp) {
+              billrpp.value = element.ratePerReport;
+            }
+            if (billrpi) {
+              billrpi.value = element.ratePerItem;
+            }
+            if (billServiceId) {
+              billServiceId.value = element.serviceId;
+            }
           });
         }
   
       });
     }
-  
-      // });
-      // this.customers.getCustomersData(3).subscribe((data: any)=>{
-      //   console.log(data.data);
-      //   this.getCustomerBillData=data.data.total;
-      //   if(this.getCustomerBillData){
-      //     this.VendorData_stat = true;
-      //   }
-      // });
       
     }
     getvendorid(id:any){
@@ -105,16 +104,16 @@ export class VendorMgmtComponent implements OnInit {
     ngOnInit(): void {
        
     }
-    billsubmit(){
-      var billValue = $(".x-billcomponents");
-      var i=0;
-      $.each(billValue,function(idx,elem){
-        if($(elem).val()!=""){
+    billsubmit() {
+      let billValue = document.querySelectorAll(".x-billcomponents");
+      let i = 0;
+      billValue.forEach(function (elem) {
+        if (elem instanceof HTMLInputElement && elem.value !== "") {
           i++;
         }
-      })
-      if(i>0){
-        this.onSubmit()
+      });
+      if (i > 0) {
+        this.onSubmit();
       }
     }
     onSubmit() {
@@ -122,9 +121,6 @@ export class VendorMgmtComponent implements OnInit {
       console.log(this.vendorlist.value.vendorIds,"---------------------getvendor")
       console.log(this.vendorlist.value,"----------------------------------------")
       const formData = new FormData();
-      // formData.append('vendorchecks', JSON.stringify(this.getbgv));
-      // formData.append('userid', this.vendorlist.value.vendorIds);
-      // console.log("____________________",formData)
       return this.customers.saveVendorChecks(this.getbgv,this.vendorlist.value.vendorIds).subscribe((result:any)=>{
         console.log(result);
         if(result.outcome === true){
@@ -148,10 +144,18 @@ export class VendorMgmtComponent implements OnInit {
       billUpdate() {
         console.log("______________inside button ------------------")
         this.getBillValues.forEach((element:any) => {
-          element.ratePerItem = $(".billrpp"+element.source.sourceId).val();
-          element.tatPerItem = $(".billrpi"+element.source.sourceId).val();
-          element.serviceId = $(".billServiceId"+element.source.userId).val();
-  
+        const ratePerReport = document.querySelector(".billrpp" + element.source.sourceId) as HTMLInputElement;
+        const ratePerItem = document.querySelector(".billrpi" + element.source.sourceId) as HTMLInputElement;
+        const serviceId = document.querySelector(".billServiceId" + element.source.sourceId) as HTMLInputElement;
+      
+        if (ratePerReport && ratePerItem && serviceId) {
+          element.ratePerReport = ratePerReport.value;
+          console.log(element.ratePerReport);
+          element.ratePerItem = ratePerItem.value;
+          console.log(element.ratePerItem);
+          element.serviceId = serviceId.value;
+          console.log(element.serviceId);
+        }
         });
         return this.customers.saveVendorChecks(this.getBillValues,this.userID ).subscribe((result:any)=>{
           console.log(result,'--------------------return---------------');

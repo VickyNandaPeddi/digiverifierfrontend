@@ -33,9 +33,6 @@ export class CustomerBillComponent implements OnInit {
       this.getBillValues=data.data;
       if(this.getBillValues){
         this.getBillValues.forEach((element:any) => {
-           $(".billrpp"+element.source.sourceId).val(element.ratePerReport);
-           $(".billrpi"+element.source.sourceId).val(element.ratePerItem);
-          $(".billServiceId"+element.source.sourceId).val(element.serviceId);
             const billrpp = document.querySelector(".billrpp" + element.source?.sourceId) as HTMLInputElement;
             const billrpi = document.querySelector(".billrpi" + element.source?.sourceId) as HTMLInputElement;
             const billServiceId = document.querySelector(".billServiceId" + element.source?.sourceId) as HTMLInputElement;      
@@ -67,18 +64,6 @@ export class CustomerBillComponent implements OnInit {
   ngOnInit(): void {
      
   }
-  // billsubmit(){
-  //   var billValue = $(".x-billcomponents");
-  //   var i=0;
-  //   $.each(billValue,function(idx,elem){
-  //     if($(elem).val()!=""){
-  //       i++;
-  //     }
-  //   })
-  //   if(i>0){
-  //     this.onSubmit()
-  //   }
-  // }
   billsubmit() {
     let billValue = document.querySelectorAll(".x-billcomponents");
     let i = 0;
@@ -114,9 +99,6 @@ export class CustomerBillComponent implements OnInit {
   }
     billUpdate() {
       this.getBillValues.forEach((element:any) => {
-        // element.ratePerReport = $(".billrpp"+element.source.sourceId).val();
-        // element.ratePerItem = $(".billrpi"+element.source.sourceId).val();
-        // element.serviceId = $(".billServiceId"+element.source.sourceId).val();
         const ratePerReport = document.querySelector(".billrpp" + element.source.sourceId) as HTMLInputElement;
         const ratePerItem = document.querySelector(".billrpi" + element.source.sourceId) as HTMLInputElement;
         const serviceId = document.querySelector(".billServiceId" + element.source.sourceId) as HTMLInputElement;

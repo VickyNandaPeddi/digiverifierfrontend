@@ -49,14 +49,10 @@ export class AdminHeaderComponent implements OnInit {
   message: any;
 
   generateConventionalExcelReport() {
-    debugger
     this.candidateservice.generateDataForExcel()
       .subscribe((data:any) => {
         const link = document.createElement('a');
         link.href = 'data:application/vnd.ms-excel;base64,' + data.message;
-        // @ts-ignore
-        // link.href = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + encodeURIComponent(data.message);
-
         link.download = "ResponseExcel.xlsx";
         link.target = '_blank';
         link.click();

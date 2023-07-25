@@ -10,7 +10,6 @@ import {CustomerEditComponent} from './customer-edit/customer-edit.component';
 import {CustomerListComponent} from './customer-list/customer-list.component';
 import {CustomerUtilAgentComponent} from './customer-util-agent/customer-util-agent.component';
 import {CustomerUtilCandidatesComponent} from './customer-util-candidates/customer-util-candidates.component';
-import {CustomerUtilizationComponent} from './customer-utilization/customer-utilization.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {EkycreportComponent} from './ekycreport/ekycreport.component';
 import {MyprofileComponent} from './myprofile/myprofile.component';
@@ -58,12 +57,6 @@ const routes: Routes = [
       },
       {path: 'vendormgmt', component: VendorMgmtComponent, canActivate: [AdminGuard], data: {roles: ['ROLE_ADMIN']}},
       {path: 'addvendor', component: AddVendorComponent, canActivate: [AdminGuard], data: {roles: ['ROLE_ADMIN']}},
-      {
-        path: 'customerUtilization',
-        component: CustomerUtilizationComponent,
-        canActivate: [AdminGuard],
-        data: {roles: ['ROLE_CBADMIN', 'ROLE_ADMIN', 'ROLE_PARTNERADMIN', 'ROLE_AGENTSUPERVISOR', 'ROLE_AGENTHR']}
-      },
       {
         path: 'customerUtilizationAgent',
         component: CustomerUtilAgentComponent,

@@ -72,8 +72,8 @@
           <i class="fa fa-list-alt"></i> Reports
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="customerUtilization" routerLinkActive="activechild"
-             *ngIf="authService.roleMatch(['ROLE_ADMIN']) || CustUtilizationReport_stat">Customer Utilization Report</a>
+          <!-- <a class="dropdown-item" routerLink="customerUtilization" routerLinkActive="activechild"
+             *ngIf="authService.roleMatch(['ROLE_ADMIN']) || CustUtilizationReport_stat">Customer Utilization Report</a> -->
           <a class="dropdown-item" routerLink="ekycReport" routerLinkActive="activechild"
              *ngIf="authService.roleMatch(['ROLE_ADMIN']) || eKycReport_stat">e-KYC Report</a>
           <a class="dropdown-item" (click)="generateConventionalExcelReport()" routerLinkActive="activechild"
