@@ -33,9 +33,9 @@ export class CustomerBillComponent implements OnInit {
       this.getBillValues=data.data;
       if(this.getBillValues){
         this.getBillValues.forEach((element:any) => {
-          // $(".billrpp"+element.source.sourceId).val(element.ratePerReport);
-          // $(".billrpi"+element.source.sourceId).val(element.ratePerItem);
-          // $(".billServiceId"+element.source.sourceId).val(element.serviceId);
+           $(".billrpp"+element.source.sourceId).val(element.ratePerReport);
+           $(".billrpi"+element.source.sourceId).val(element.ratePerItem);
+          $(".billServiceId"+element.source.sourceId).val(element.serviceId);
             const billrpp = document.querySelector(".billrpp" + element.source?.sourceId) as HTMLInputElement;
             const billrpi = document.querySelector(".billrpi" + element.source?.sourceId) as HTMLInputElement;
             const billServiceId = document.querySelector(".billServiceId" + element.source?.sourceId) as HTMLInputElement;      
