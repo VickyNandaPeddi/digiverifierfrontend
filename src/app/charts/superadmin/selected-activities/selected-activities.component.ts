@@ -1,11 +1,12 @@
-import { Component, NgZone, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
+import {Component, NgZone, AfterViewInit, OnDestroy, OnInit} from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import { SuperadminDashboardService } from 'src/app/services/superadmin-dashboard.service';
-import { CustomerService } from 'src/app/services/customer.service';
-import { Subscription } from 'rxjs';
-import { LoaderService } from 'src/app/services/loader.service';
+import {SuperadminDashboardService} from 'src/app/services/superadmin-dashboard.service';
+import {CustomerService} from 'src/app/services/customer.service';
+import {Subscription} from 'rxjs';
+import {LoaderService} from 'src/app/services/loader.service';
+
 am4core.useTheme(am4themes_animated);
 
 @Component({
@@ -14,39 +15,43 @@ am4core.useTheme(am4themes_animated);
   styleUrls: ['./selected-activities.component.scss']
 })
 export class SelectedActivitiesComponent implements OnInit {
-  private chart: any=am4charts.XYChart;
-  selectedActivitiesData:any=[];
-  getCustID:any=[];
-  selectedCustId: number=0;
-  SAduration: number=0;
+  private chart: any = am4charts.XYChart;
+  selectedActivitiesData: any = [];
+  getCustID: any = [];
+  selectedCustId: number = 0;
+  SAduration: number = 0;
+
   constructor(private zone: NgZone, private superadminDB: SuperadminDashboardService,
-    private customers:CustomerService, public loaderService:LoaderService) {
-      this.customers.getCustomersBill().subscribe((data: any)=>{
-        this.getCustID=data.data;
-      })
-  }
-  getCustomerData(custId:any){
-    this.selectedCustId = custId;
-    this.loadCharts();
-    setTimeout(() =>{
-      this.loaderService.hide();
-    },1500);
-  }
-  saDurationFilter(duration:any){
-    this.SAduration = duration;
-    this.loadCharts();
-    setTimeout(() =>{
-      this.loaderService.hide();
-    },1500);
-  }
-  ngAfterViewInit() {
-    setTimeout(() =>{
-      this.ngOnDestroy();
-      this.loadCharts();
-    },50);
+              private customers: CustomerService, public loaderService: LoaderService) {
+    this.customers.getCustomersBill().subscribe((data: any) => {
+      this.getCustID = data.data;
+    })
   }
 
-  loadCharts(){
+  getCustomerData(custId: any) {
+    this.selectedCustId = custId;
+    this.loadCharts();
+    setTimeout(() => {
+      this.loaderService.hide();
+    }, 1500);
+  }
+
+  saDurationFilter(duration: any) {
+    this.SAduration = duration;
+    this.loadCharts();
+    setTimeout(() => {
+      this.loaderService.hide();
+    }, 1500);
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.ngOnDestroy();
+      this.loadCharts();
+    }, 50);
+  }
+
+  loadCharts() {
     this.zone.runOutsideAngular(() => {
       let chart = am4core.create("selectedActivities", am4charts.PieChart);
       chart.innerRadius = am4core.percent(50);
@@ -57,39 +62,37 @@ export class SelectedActivitiesComponent implements OnInit {
       chart.legend.itemContainers.template.paddingBottom = 4;
       chart.legend.fontSize = 13;
       chart.legend.useDefaultMarker = true;
-      let marker:any = chart.legend.markers.template.children.getIndex(0);
+      let marker: any = chart.legend.markers.template.children.getIndex(0);
       marker.cornerRadius(12, 12, 12, 12);
       marker.strokeWidth = 3;
       marker.strokeOpacity = 1;
       marker.stroke = am4core.color("#000");
-      
+
       chart.logo.disabled = true;
       chart.legend.position = "right";
       chart.padding(0, 0, 0, 0);
       chart.paddingRight = 0;
 
-      var fromDate:any = localStorage.getItem('dbFromDate');
-      var toDate:any = localStorage.getItem('dbToDate');
+      var fromDate: any = localStorage.getItem('dbFromDate');
+      var toDate: any = localStorage.getItem('dbToDate');
       let filterData = {
         'fromDate': fromDate,
         'toDate': toDate,
         'organizationId': this.selectedCustId
       }
-     
-      this.superadminDB.getActivityDetails(filterData).subscribe((uploadinfo: any)=>{
-        this.selectedActivitiesData=uploadinfo.data.candidateStatusCountDto;
+
+      this.superadminDB.getActivityDetails(filterData).subscribe((uploadinfo: any) => {
+        this.selectedActivitiesData = uploadinfo.data.candidateStatusCountDto;
         let data = [];
         for (let i = 0; i < this.selectedActivitiesData.length; i++) {
-          let obj={};
-          obj=this.selectedActivitiesData[i].statusName;
           data.push({name: this.selectedActivitiesData[i].statusName, value: this.selectedActivitiesData[i].count});
         }
         chart.data = data;
       });
-      
+
       // Add and configure Series
       let pieSeries = chart.series.push(new am4charts.PieSeries());
-    
+
       pieSeries.slices.template.tooltipText = "{category}: {value}";
       pieSeries.labels.template.disabled = true;
       pieSeries.dataFields.value = "value";
@@ -115,8 +118,8 @@ export class SelectedActivitiesComponent implements OnInit {
       ];
 
     });
-   
-}
+
+  }
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
@@ -128,7 +131,7 @@ export class SelectedActivitiesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
   }
 
 }

@@ -192,6 +192,32 @@ export class UploadVendocheckComponent implements OnInit {
     });
   }
 
+  // onSubmitFilter() {
+  //
+  //   this.fromDate = this.fromDate != null ? this.fromDate : '';
+  //   this.toDate = this.toDate != null ? this.toDate : '';
+  //   this.utilizationReportFilter.patchValue({
+  //     fromDate: this.fromDate,
+  //     toDate: this.toDate,
+  //   });
+  //   localStorage.setItem('dbFromDate', this.fromDate);
+  //   localStorage.setItem('dbToDate', this.toDate);
+  //   let filterData = {
+  //     userId: this.orgID,
+  //     fromDate: localStorage.getItem("dbFromDate"),
+  //     toDate: localStorage.getItem("dbToDate"),
+  //   };
+  //
+  //   console.log("filtered data  :" + filterData)
+  //   this.customers.getallVendorCheckDetailsByDateRange(filterData).subscribe((data: any) => {
+  //     if (data.outcome === true) {
+  //       this.vendorchecksupload = data.data;
+  //       console.log("this.vendorchecksupload", this.vendorchecksupload);
+  //       // this.start_date = data.data.fromDate != null ? data.data.fromDate.split('-').join('/') : ''
+  //       // this.end_date = data.data.toDate != null ? data.data.toDate.split('-').join('/') : ''
+  //     }
+  //   });
+  // }
   onSubmitFilter() {
 
     const inputFromDate: any = $("#inputFromDateVendor").val();
@@ -209,6 +235,20 @@ export class UploadVendocheckComponent implements OnInit {
       this.getUploadVendorCheckData();
     }
   }
+
+
+  // uploadGlobalCase(event: any) {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = function (e) {
+  //     const data = new Uint8Array(e.target.result);
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open('POST', '/upload', true);
+  //     xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+  //     xhr.send(data);
+  //   };
+  //   reader.readAsArrayBuffer(file);
+  // }
 
   uploadGlobalCaseDetails(event: any) {
     const fileType = event.target.files[0].name.split('.').pop();
@@ -235,6 +275,13 @@ export class UploadVendocheckComponent implements OnInit {
 
   }
 
+  // patchAddIdValues() {
+  //   this.vendorlist.patchValue({
+  //     candidateId: this.candidateId,
+  //     sourceId: this.sourceId,
+  //     vendorId: this.vendorId,
+  //   });
+  // }
   isButtonDisabled: boolean = false;
 
   getRemarks(): any {
@@ -374,7 +421,6 @@ export class UploadVendocheckComponent implements OnInit {
   }
 
   downloadReferenceExcelData(candidateName: any, sourceName: any, candidateId: any, sourceId: any) {
-    debugger
     this.candidateService.generateReferenceDataForVendor(candidateId, sourceId).subscribe((data: any) => {
       const link = document.createElement('a');
       link.href = 'data:application/vnd.ms-excel;base64,' + data.message;
@@ -390,14 +436,47 @@ export class UploadVendocheckComponent implements OnInit {
   downloadPdf(agentUploadedDocument: any) {
     console.log(agentUploadedDocument, "******************************");
     if (agentUploadedDocument == null || agentUploadedDocument == "") {
-      alert("No Document Found")
+      console.log("No Document Found")
     }
 
     this.customers.generatePrecisedUrl(agentUploadedDocument).subscribe(data => {
+
+      // specify the URL of the file
+      // @ts-ignore
+      // let precisedurl = data.data;
+      //
+      // var parts = precisedurl.split('.'); // split the URL by the "." character
+      // var extension = parts[parts.length - 1]; // get the last part of the URL, which should be the file extension
+      //
+      // if (extension !== 'pdf') {
+      //   precisedurl = precisedurl.replace('.' + extension, '.png'); // replace the extension with ".png"
+      // }
+      //
+      // window.open(precisedurl, "_blank", "resizable=yes,scrollbars=yes,status=yes");
+
+      //
+      // // @ts-ignore
+      // var mime_type = "image/png"; // specify the MIME type of the file
       // @ts-ignore
       window.open(data.data);
 
+      // var mime_type = "image/png"; // specify the MIME type of the PNG image
+      // //@ts-ignore
+      // window.open(data.data).document.type = mime_type;
+
     })
+    // if (agentUploadedDocument != null) {
+    //   const linkSource = 'data:application;base64,' + agentUploadedDocument;
+    //   const downloadLink = document.createElement("a");
+    //   downloadLink.href = linkSource;
+    //   downloadLink.download = "Download.pdf"
+    //   downloadLink.click();
+    // } else {
+    //   Swal.fire({
+    //     title: 'No Documents Uploaded',
+    //     icon: 'warning'
+    //   })
+    // }
   }
 
 

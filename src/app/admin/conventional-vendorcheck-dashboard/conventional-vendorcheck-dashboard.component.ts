@@ -543,9 +543,7 @@ export class ConventionalVendorcheckDashboardComponent implements OnInit {
     this.licheckVendor.sourceName = this.sourceName
     this.licheckVendor.documentName = this.documentUrl;
     this.licheckVendor.candidateID = this.changedCandidateId;
-    // @ts-ignore
     if (this.vendorCheckId != null) {
-      alert("not null")
     }
     this.customers.saveConventionalVendorCheckWithVendorData(this.licheckVendor).subscribe((data: any) => {
       console.log(data.data);
@@ -604,7 +602,7 @@ export class ConventionalVendorcheckDashboardComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
- 
+
   linkAdminApproval(candidateCode: any) {
     console.log(candidateCode, '-----------------------------------------------');
     localStorage.setItem("capprequestid", candidateCode);

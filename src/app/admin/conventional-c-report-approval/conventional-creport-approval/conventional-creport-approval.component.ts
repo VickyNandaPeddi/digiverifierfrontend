@@ -67,6 +67,11 @@ export class ConventionalCReportApprovalComponent implements OnInit {
       this.getColors = data.data;
       console.log(this.getColors);
     });
+
+    // this.candidateService.getServiceConfigCodes(this.candidateCode).subscribe((result: any) => {
+    //   this.getServiceConfigCodes = result.data;
+    //   console.log(this.getServiceConfigCodes);
+    // });
   }
 
   ngOnInit(): void {
@@ -165,6 +170,14 @@ export class ConventionalCReportApprovalComponent implements OnInit {
   }
 
   submitReportApproval(formReportApproval: FormGroup) {
+    // this.candidateService.generateReportWithReportType(this.candidateCode, "FINAL", "UPDATE").subscribe(
+    //   (data: any) => {
+    //     // @ts-ignore
+    //     window.open(data.data, "_blank");
+    //     if (data.message != null) {
+    //       alert(data.message)
+    //     }
+    //   });
     this.generateInterimReport().then(() => {
       const navURL = 'admin/ConventionalDashboard/';
       this.navRouter.navigate([navURL]);
@@ -174,7 +187,6 @@ export class ConventionalCReportApprovalComponent implements OnInit {
 
   submitAddcomment(formAddcomment: FormGroup) {
     console.log("================================ ***** formAddcomment", this.formAddcomment.value)
-    debugger
     if (this.formAddcomment.valid) {
       this.candidateService.AddCommentsReports(this.formAddcomment.value).subscribe((result: any) => {
         window.open(result.data, "_blank");
@@ -306,6 +318,9 @@ export class ConventionalCReportApprovalComponent implements OnInit {
 
 
   InterimReport() {
+    // console.log(this.candidateCode, "-----------------------------------------------");
+    // const navURL = 'admin/CV-Final-Approval/' + this.candidateCode;
+    // this.navRouter.navigate([navURL]);
     this.candidateService.generateReportWithReportType(this.candidateCode, "INTERIM", "UPDATE").subscribe(
       (result: any) => {
         if (result.outcome === true) {
@@ -314,6 +329,8 @@ export class ConventionalCReportApprovalComponent implements OnInit {
             icon: 'success'
           }).then((result) => {
             if (result.isConfirmed) {
+              // const navURL = 'admin/CV-Final-Approval/' + this.candidateCode;
+              // this.navRouter.navigate([navURL]);
             }
           });
         } else {

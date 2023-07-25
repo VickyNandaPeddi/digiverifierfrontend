@@ -69,9 +69,9 @@ export class CandidatesubmittedConventionalComponent implements OnInit {
   ) {
 
     //adding Candidates based on vendor id without adding duplicates
-    this.customer.updateCandidateStatusBasedOnLiCheckStatus().subscribe(data => {
-      console.log(data)
-    });
+    // this.customer.updateCandidateStatusBasedOnLiCheckStatus().subscribe(data => {
+    //   console.log(data)
+    // });
     this.getReportDeliveryStatCodes =
       this.dashboardservice.getReportDeliveryStatCode();
     this.getPendingDetailsStatCode =
@@ -237,8 +237,6 @@ export class CandidatesubmittedConventionalComponent implements OnInit {
           //console.log(this.getuploadinfo);
           let data = [];
           for (let i = 0; i < this.getuploadinfo.length; i++) {
-            let obj = {};
-            obj = this.getuploadinfo[i].statusName;
             data.push({
               name: this.getuploadinfo[i].statusName,
               value: this.getuploadinfo[i].count,
@@ -325,8 +323,6 @@ export class CandidatesubmittedConventionalComponent implements OnInit {
           //console.log(this.getuploadinfo);
           let data = [];
           for (let i = 0; i < this.getuploadinfo.length; i++) {
-            let obj = {};
-            obj = this.getuploadinfo[i].statusName;
             data.push({
               name: this.getuploadinfo[i].statusName,
               value: this.getuploadinfo[i].count,
@@ -406,6 +402,41 @@ export class CandidatesubmittedConventionalComponent implements OnInit {
 
   isLoading = true;
 
+  // conventionalvendor(candidateId: any) {
+  //   this.loaderService.showLoader(true);
+  //   alert('Licheck Fetch Starts')
+  //
+  //
+  //   console.log(candidateId, '-----------------------------------------------');
+  //   alert(candidateId + "start");
+  //   this.customer.getConventionalCandidateByCandidateId(candidateId).subscribe((data: any) => {
+  //     console.log(data)
+  //     if (data.toString() != null) {
+  //       this.loaderService.showLoader(false);
+  //       alert('Licheck Fetch ends')
+  //     }
+  //
+  //   });
+  // }
+  // async licheckByCandidateID(candidateId: any) {
+  //
+  //   try {
+  //     this.loaderService.show();
+  //     const licheckdata: any = await this.customer.getConventionalCandidateByCandidateId(candidateId).toPromise();
+  //     console.log("responde data" + licheckdata);
+  //
+  //     if (licheckdata != null) {
+  //       return;
+  //     }
+  //   } catch (error) {
+  //     // Handle any errors that occur during the API call
+  //     console.error(error);
+  //   } finally {
+  //     console.log("finally")
+  //   }
+  // }
+
+
   async licheckByCandidateID(candidateId: any) {
     return new Promise<void>((resolve) => {
       this.customer.getConventionalCandidateByCandidateId(candidateId).subscribe((LICDAE: any) => {
@@ -429,8 +460,8 @@ export class CandidatesubmittedConventionalComponent implements OnInit {
       const navURL = 'admin/conventionalVendorcheck';
       this.navRouter.navigate([navURL]);
     });
-      localStorage.setItem("finalReportStatus", status);
-    }
+    localStorage.setItem("finalReportStatus", status);
+  }
 
   getInterimReport(requestId: any) {
     this.candidateService.generateReportWithReportType(requestId, "INTERIM", "DONT").subscribe(data =>
